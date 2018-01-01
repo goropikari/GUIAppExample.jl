@@ -63,7 +63,8 @@ end
 
 function show_history()
     win = Window("Number history")
-    history = Label(join(number_history, " "))
+    history = Label("<span font=\"15\">" * join(number_history, " ") * "</span>")
+    setproperty!(history, :use_markup, true)
     push!(win, history)
     GAccessor.line_wrap(history, true)
     showall(win)
