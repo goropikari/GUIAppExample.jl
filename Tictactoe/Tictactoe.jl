@@ -3,7 +3,7 @@
 using Gtk.ShortNames, Gtk
 
 n = 3
-win = GtkWindow("○ ☓ ゲーム", 100, 100)
+win = GtkWindow("Tic tac toe", 100, 100)
 f = GtkFrame()
 v = GtkBox(:v)
 push!(win, f)
@@ -37,11 +37,11 @@ iter = 0
 function onoff(x, h)
     global iter += 1
     if isodd(iter)
-        setproperty!(h, :label, "○")
-        setproperty!(h, :name, "○")
+        setproperty!(h, :label, "O")
+        setproperty!(h, :name, "O")
     else
-        setproperty!(h, :label, "☓")
-        setproperty!(h, :name, "☓")
+        setproperty!(h, :label, "X")
+        setproperty!(h, :name, "X")
     end
     checkboard()
 
@@ -59,9 +59,9 @@ function checkboard()
         all([ getproperty(g[3-i,i+1], :name, String) == getproperty(g[2,2], :name, String) != "" for i in 0:n-1]) )
 
         if isodd(iter)
-            setproperty!(label, :label, "Win ○")
+            setproperty!(label, :label, "Win O")
         else
-            setproperty!(label, :label, "Win ☓")
+            setproperty!(label, :label, "Win X")
         end
 
     elseif (all([getproperty(g[i,j], :name, String) != "" for i in 1:n for j in 1:n]) &&
@@ -85,7 +85,6 @@ signal_connect(reset_state, reset_button, "clicked")
 
 showall(win)
 
-
 signal_connect(menu_quit, :activate) do w
   if !isinteractive()
     Gtk.gtk_quit()
@@ -95,10 +94,9 @@ signal_connect(menu_quit, :activate) do w
 end
 
 if !isinteractive()
-  signal_connect(win, :destroy) do w
-    Gtk.gtk_quit()
-  end
-  ### メインループ
-  Gtk.gtk_main()
+    c = Condition()
+    signal_connect(win, :destroy) do widget
+        notify(c)
+    end
+    wait(c)
 end
-
