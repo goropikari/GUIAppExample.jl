@@ -9,5 +9,5 @@ These are GUI apps in Julia. They are made of GTK.
 Pkg.add("Gtk")
 ```
 
-Reference
+## Reference
 [GTK+ 3 Reference Manual](https://developer.gnome.org/gtk3/stable/)
