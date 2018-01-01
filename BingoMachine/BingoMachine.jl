@@ -6,12 +6,25 @@ win = Window("Bingo Machine")
 vbox = Box(:v)
 push!(win, vbox)
 
+## メニューバー
+menu_bar = MenuBar()
+file = MenuItem("File")
+filemenu = Menu(file)
+menu_history = MenuItem("History")
+menu_quit = MenuItem("Quit")
+push!(vbox, menu_bar)
+push!(menu_bar, file)
+push!(filemenu, menu_history)
+push!(filemenu, menu_quit)
+
+## 数字表示部分
 number_display = Label("")
 setproperty!(number_display, :use_markup, true)
 hbox = Box(:h)
 push!(vbox, number_display)
 push!(vbox, hbox)
 
+## 数字を更新、リセットするためのボタン
 next_button = Button("Next")
 reset_button = Button("Reset")
 push!(hbox, next_button)
@@ -31,7 +44,6 @@ function next_number()
     if length(number_list) != 0
         n = pop!(number_list)
         push!(number_history, n)
-        sort!(number_history)
         GAccessor.markup(number_display, "<span font=\"60\">$n</span>")
     else
         GAccessor.markup(number_display, "<span font=\"60\">Finish!</span>")
@@ -49,10 +61,30 @@ function reset_number()
 end
 
 
-signal_connect(x -> next_number(), next_button, "clicked")
-signal_connect(x -> reset_number(), reset_button, "clicked")
+function show_history()
+    win = Window("Number history")
+    history = Label(join(number_history, " "))
+    push!(win, history)
+    GAccessor.line_wrap(history, true)
+    showall(win)
+
+    return nothing
+end
 
 showall(win)
+
+
+signal_connect(x -> next_number(), next_button, "clicked")
+signal_connect(x -> reset_number(), reset_button, "clicked")
+signal_connect((x,y) -> show_history(), menu_history, :activate, Void, (), false)
+
+signal_connect(menu_quit, :activate) do w
+  if !isinteractive()
+    Gtk.gtk_quit()
+  else
+    exit()
+  end
+end
 
 if !isinteractive()
     c = Condition()
