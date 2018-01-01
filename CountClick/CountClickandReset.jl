@@ -7,10 +7,11 @@ push!(win, v)
 
 l = GtkLabel("You clicked 0 times.")
 r = GtkButton("Reset")
-b = GtkButton("Press me")
+b = GtkButton("Click")
 push!(v, l)
 push!(v, r)
 push!(v, b)
+setproperty!(v, :expand, l, true)
 
 niter = 0
 function click(widget)
