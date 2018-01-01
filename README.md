@@ -1,4 +1,4 @@
-# JuliaGUIAppExample
+# Julia GUI App Example
 
 ```julia
 $ julia Tictactoe.jl
