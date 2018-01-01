@@ -1,23 +1,24 @@
 #!/usr/bin/env julia
-using Gtk.ShortNames, Gtk
+using Gtk, Gtk.ShortNames
 
-win = GtkWindow("Sample App")
-v = GtkBox(:v)
+win = Window("Sample App")
+v = Box(:v)
 push!(win, v)
 
-l = GtkLabel("You clicked 0 times.")
-b = GtkButton("Press me")
+l = Label("You clicked 0 times.")
+b = Button("Click!")
 push!(v, l)
 push!(v, b)
+setproperty!(v, :expand, l, true)
 
 niter = 0
-function click(widget)
+function click()
     global niter += 1
     setproperty!(l, :label, "You clicked $niter times.")
     return nothing
 end
 
-signal_connect(click, b, "clicked")
+signal_connect(x -> click(), b, "clicked")
 
 showall(win)
 
