@@ -1,3 +1,4 @@
+#!/usr/bin/env julia
 using Gtk.ShortNames, Gtk
 
 win = GtkWindow("Sample App")
@@ -29,3 +30,12 @@ signal_connect(resetcount, r, "clicked")
 
 
 showall(win)
+
+
+if !isinteractive()
+    c = Condition()
+    signal_connect(win, :destroy) do widget
+        notify(c)
+    end
+    wait(c)
+end
