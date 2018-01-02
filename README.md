@@ -10,6 +10,7 @@ Pkg.add("Gtk")
 ```
 
 ## Reference
+[Gtk.jl documentation](http://juliagraphics.github.io/Gtk.jl/latest/)
 [GTK+ 3 Reference Manual](https://developer.gnome.org/gtk3/stable/)
 
 ## Screenshots

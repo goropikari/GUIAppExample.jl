@@ -1,15 +1,17 @@
 #!/usr/bin/env julia
 using Gtk, Gtk.ShortNames
 
-win = Window("Sample App")
+win = Window("Count Click")
 v = Box(:v)
-push!(win, v)
-
 l = Label("You clicked 0 times.")
 b = Button("Click!")
+push!(win, v)
 push!(v, l)
 push!(v, b)
 setproperty!(v, :expand, l, true)
+
+showall(win)
+
 
 niter = 0
 function click()
@@ -20,7 +22,6 @@ end
 
 signal_connect(x -> click(), b, "clicked")
 
-showall(win)
 
 if !isinteractive()
     c = Condition()
