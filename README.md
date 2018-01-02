@@ -20,5 +20,6 @@ Pkg.add("Gtk")
 <img src="screenshots/bingomachine.png" align="middle" />
 <img src="screenshots/gol.png" align="middle" />
 <img src="screenshots/tictactoe.png" align="middle" />
+<img src="screenshots/texteditor.png" align="middle" />
 
 
