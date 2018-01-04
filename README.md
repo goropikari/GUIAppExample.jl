@@ -32,6 +32,8 @@ Pkg.add("Gtk")
 <img src="screenshots/tictactoe.png" align="middle" />
 
 ### Text editor
+
 <img src="screenshots/texteditor.png" align="middle" />
 
-
+### Calculator
+<img src="screenshots/calculator.png" align="middle" />
