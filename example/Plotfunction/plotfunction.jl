@@ -31,6 +31,8 @@ mutable struct Variables
     t::String
     ts::Float64
     tf::Float64
+    xlog::Bool
+    ylog::Bool
 end
 
 
@@ -43,7 +45,9 @@ variables = Variables(getproperty(ui["eqn"], :text, String),
           eval(parse(getproperty(ui["yf"], :text, String))),
           getproperty(ui["t"], :text, String),
           eval(parse(getproperty(ui["ts"], :text, String))),
-          eval(parse(getproperty(ui["tf"], :text, String))) )
+          eval(parse(getproperty(ui["tf"], :text, String))),
+          getproperty(ui["xlog"], :active, Bool),
+          getproperty(ui["ylog"], :active, Bool))
 
 function update_variables()
     variables.eqn = getproperty(ui["eqn"], :text, String)
@@ -56,8 +60,23 @@ function update_variables()
     variables.t = getproperty(ui["t"], :text, String)
     variables.ts = eval(parse(getproperty(ui["ts"], :text, String)))
     variables.tf = eval(parse(getproperty(ui["tf"], :text, String)))
+    variables.xlog = getproperty(ui["xlog"], :active, Bool)
+    variables.ylog = getproperty(ui["ylog"], :active, Bool)
 
     return nothing
+end
+
+function plot_option!()
+    plot!(title=getproperty(ui["title"], :text, String))
+    plot!(xlabel=getproperty(ui["xlabel"], :text, String))
+    plot!(ylabel=getproperty(ui["ylabel"], :text, String))
+    plot!(zlabel=getproperty(ui["zlabel"], :text, String))
+    if variables.xlog
+        plot!(xscale=:log10)
+    end
+    if variables.ylog
+        plot!(yscale=:log10)
+    end
 end
 
 function genfn_single()
@@ -74,16 +93,18 @@ end
 function genfn_double()
     x = variables.xs:variables.xf
     y = variables.ys:variables.yf
-    if length(split(variables.eqn, ",")) == 1
-        if contains(variables.eqn, "=")
-            eqn = split(variables.eqn, "=")[2]
-        else
-            eqn = variables.eqn
-        end
-        f = eval(parse( "(" * variables.x * "," * variables.y * ")" * "->" * eqn))
+    if contains(variables.eqn, "=")
+        eqn = split(variables.eqn, "=")[2]
+    else
+        eqn = variables.eqn
+    end
+    f = eval(parse( "(" * variables.x * "," * variables.y * ")" * "->" * eqn))
 
-        return x, y, f
-    elseif length(split(variables.eqn, ",")) == 2
+    return x, y, f
+end
+
+function genfn_para()
+    if length(split(variables.eqn, ",")) == 2
         de = split(variables.eqn, ",")
         if contains(de[1], "=")
             e1 = split(de[1], "=")[2]
@@ -135,6 +156,7 @@ function plot2d_button()
     update_variables()
     f = genfn_single()
     plot(x-> Base.invokelatest(f,x), variables.xs, variables.xf)
+    plot_option!()
     savefig(filename)
 
     setproperty!(ui["preview"], :file, filename)
@@ -148,7 +170,7 @@ function contour_button()
     update_variables()
     x, y, f = genfn_double()
     contour(x, y, (x,y) -> Base.invokelatest(f, x, y), fill=true, colorbar=true)
-
+    plot_option!()
     savefig(filename)
 
     setproperty!(ui["preview"], :file, filename)
@@ -159,9 +181,9 @@ end
 
 function para2d_button()
     update_variables()
-    f, g = genfn_double()
+    f, g = genfn_para()
     plot(t1 -> Base.invokelatest(f,t1), t2 -> Base.invokelatest(g,t2), variables.ts, variables.tf)
-
+    plot_option!()
     savefig(filename)
     setproperty!(ui["preview"], :file, filename)
     println("parametric function 2d")
@@ -173,7 +195,7 @@ function plot3d_button()
     update_variables()
     x, y, f = genfn_double()
     surface(x, y, (x,y) -> Base.invokelatest(f, x, y))
-
+    plot_option!()
     savefig(filename)
 
     setproperty!(ui["preview"], :file, filename)
@@ -184,12 +206,12 @@ end
 
 function para3d_button()
     update_variables()
-    f, g, h = genfn_double()
+    f, g, h = genfn_para()
     plot3d(t -> Base.invokelatest(f,t),
          t -> Base.invokelatest(g,t),
          t -> Base.invokelatest(h,t),
          variables.ts, variables.tf)
-
+    plot_option!()
     savefig(filename)
     setproperty!(ui["preview"], :file, filename)
     println("parametric function 3d")
@@ -198,12 +220,19 @@ function para3d_button()
 end
 
 
+function savefig_button()
+    dstname = save_dialog("Save figure")
+    cp(filename, dstname, remove_destination=true)
+
+    return nothing
+end
+
 signal_connect(x -> plot2d_button(), ui["plot2d"], "clicked")
 signal_connect(x -> contour_button(), ui["contour"], "clicked")
 signal_connect(x -> para2d_button(), ui["para2d"], "clicked")
 signal_connect(x -> plot3d_button(), ui["plot3d"], "clicked")
 signal_connect(x -> para3d_button(), ui["para3d"], "clicked")
-
+signal_connect(x -> savefig_button(), ui["savefig"], "clicked")
 
 if !isinteractive()
     c = Condition()
