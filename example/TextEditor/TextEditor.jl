@@ -11,11 +11,7 @@ end
 text = Text()
 
 
-ui = if isinteractive()
-    Builder(filename="ui.glade")
-else
-    Builder(filename=dirname(PROGRAM_FILE) * "/ui.glade")
-end
+ui = Builder(filename=(@__DIR__) * "/ui.glade")
 showall(ui["win"])
 
 writetext!(textview::GtkTextView, s::AbstractString) = getproperty(textview, :buffer, GtkTextBuffer) |> x -> setproperty!(x, :text, s)

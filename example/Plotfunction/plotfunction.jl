@@ -6,11 +6,7 @@ outputdir = tempdir() * "/juliaplot" * randstring()
 mkdir(outputdir)
 filename = outputdir * "/plot.png"
 
-ui = if isinteractive()
-    Builder(filename="ui.glade")
-else
-    Builder(filename=dirname(PROGRAM_FILE) * "/ui.glade")
-end
+ui = Builder(filename=(@__DIR__) * "/ui.glade")
 
 if isinteractive()
     setproperty!(ui["preview"], :file, "Julia_prog_language_logo.svg")

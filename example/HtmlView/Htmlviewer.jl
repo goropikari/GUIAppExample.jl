@@ -1,7 +1,7 @@
 #!/usr/bin/env julia
 using Gtk, Gtk.ShortNames
 
-ui = Builder(filename=dirname(PROGRAM_FILE) * "/ui.glade")
+ui = Builder(filename=(@__DIR__) * "/ui.glade")
 showall(ui["win"])
 
 

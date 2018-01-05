@@ -1,11 +1,7 @@
 #!/usr/bin/env julia
 using Gtk, Gtk.ShortNames
 
-ui = if isinteractive()
-	Builder(filename="ui.glade")
-else
-	Builder(filename=dirname(PROGRAM_FILE) * "/ui.glade")
-end
+ui = Builder(filename=(@__DIR__) * "/ui.glade")
 showall(ui["win"])
 
 gettext(textview::GtkTextView) = getproperty(textview, :buffer, GtkTextBuffer) |> x -> getproperty(x, :text, AbstractString)
