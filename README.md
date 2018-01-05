@@ -37,3 +37,7 @@ Pkg.add("Gtk")
 
 ### Calculator
 <img src="screenshots/calculator.png" align="middle" />
+
+### Plot function
+<img src="screenshots/plotfunction.png" align="middle" />
+
