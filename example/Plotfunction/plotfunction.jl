@@ -1,17 +1,17 @@
 #!/usr/bin/env julia
-using Gtk, Gtk.ShortNames, Plots
+using Gtk, Gtk.ShortNames, Plots, Random
 gr(legend=false)
 
-outputdir = tempdir() * "/juliaplot" * randstring()
+outputdir = joinpath(tempdir(),"juliaplot" * randstring())
 mkdir(outputdir)
-filename = outputdir * "/plot.png"
+filename = joinpath(outputdir, "plot.png")
 
-ui = Builder(filename=(@__DIR__) * "/ui.glade")
+ui = Builder(filename=joinpath(@__DIR__, "ui.glade"))
 
 if isinteractive()
-    setproperty!(ui["preview"], :file, "Julia_prog_language_logo.svg")
+    set_gtk_property!(ui["preview"], :file, "Julia_prog_language_logo.svg")
 else
-    setproperty!(ui["preview"], :file, dirname(PROGRAM_FILE) * "/Julia_prog_language_logo.svg")
+    set_gtk_property!(ui["preview"], :file, joinpath(dirname(PROGRAM_FILE), "Julia_prog_language_logo.svg"))
 end
 
 showall(ui["win"])
@@ -32,41 +32,41 @@ mutable struct Variables
 end
 
 
-variables = Variables(getproperty(ui["eqn"], :text, String),
-          getproperty(ui["x"], :text, String),
-          eval(parse(getproperty(ui["xs"], :text, String))),
-          eval(parse(getproperty(ui["xf"], :text, String))),
-          getproperty(ui["y"], :text, String),
-          eval(parse(getproperty(ui["ys"], :text, String))),
-          eval(parse(getproperty(ui["yf"], :text, String))),
-          getproperty(ui["t"], :text, String),
-          eval(parse(getproperty(ui["ts"], :text, String))),
-          eval(parse(getproperty(ui["tf"], :text, String))),
-          getproperty(ui["xlog"], :active, Bool),
-          getproperty(ui["ylog"], :active, Bool))
+variables = Variables(get_gtk_property(ui["eqn"], :text, String),
+          get_gtk_property(ui["x"], :text, String),
+          eval(Meta.parse(get_gtk_property(ui["xs"], :text, String))),
+          eval(Meta.parse(get_gtk_property(ui["xf"], :text, String))),
+          get_gtk_property(ui["y"], :text, String),
+          eval(Meta.parse(get_gtk_property(ui["ys"], :text, String))),
+          eval(Meta.parse(get_gtk_property(ui["yf"], :text, String))),
+          get_gtk_property(ui["t"], :text, String),
+          eval(Meta.parse(get_gtk_property(ui["ts"], :text, String))),
+          eval(Meta.parse(get_gtk_property(ui["tf"], :text, String))),
+          get_gtk_property(ui["xlog"], :active, Bool),
+          get_gtk_property(ui["ylog"], :active, Bool))
 
 function update_variables()
-    variables.eqn = getproperty(ui["eqn"], :text, String)
-    variables.x = getproperty(ui["x"], :text, String)
-    variables.xs = eval(parse(getproperty(ui["xs"], :text, String)))
-    variables.xf = eval(parse(getproperty(ui["xf"], :text, String)))
-    variables.y = getproperty(ui["y"], :text, String)
-    variables.ys = eval(parse(getproperty(ui["ys"], :text, String)))
-    variables.yf = eval(parse(getproperty(ui["yf"], :text, String)))
-    variables.t = getproperty(ui["t"], :text, String)
-    variables.ts = eval(parse(getproperty(ui["ts"], :text, String)))
-    variables.tf = eval(parse(getproperty(ui["tf"], :text, String)))
-    variables.xlog = getproperty(ui["xlog"], :active, Bool)
-    variables.ylog = getproperty(ui["ylog"], :active, Bool)
+    variables.eqn = get_gtk_property(ui["eqn"], :text, String)
+    variables.x = get_gtk_property(ui["x"], :text, String)
+    variables.xs = eval(Meta.parse(get_gtk_property(ui["xs"], :text, String)))
+    variables.xf = eval(Meta.parse(get_gtk_property(ui["xf"], :text, String)))
+    variables.y = get_gtk_property(ui["y"], :text, String)
+    variables.ys = eval(Meta.parse(get_gtk_property(ui["ys"], :text, String)))
+    variables.yf = eval(Meta.parse(get_gtk_property(ui["yf"], :text, String)))
+    variables.t = get_gtk_property(ui["t"], :text, String)
+    variables.ts = eval(Meta.parse(get_gtk_property(ui["ts"], :text, String)))
+    variables.tf = eval(Meta.parse(get_gtk_property(ui["tf"], :text, String)))
+    variables.xlog = get_gtk_property(ui["xlog"], :active, Bool)
+    variables.ylog = get_gtk_property(ui["ylog"], :active, Bool)
 
     return nothing
 end
 
 function plot_option!()
-    plot!(title=getproperty(ui["title"], :text, String))
-    plot!(xlabel=getproperty(ui["xlabel"], :text, String))
-    plot!(ylabel=getproperty(ui["ylabel"], :text, String))
-    plot!(zlabel=getproperty(ui["zlabel"], :text, String))
+    plot!(title=get_gtk_property(ui["title"], :text, String))
+    plot!(xlabel=get_gtk_property(ui["xlabel"], :text, String))
+    plot!(ylabel=get_gtk_property(ui["ylabel"], :text, String))
+    plot!(zlabel=get_gtk_property(ui["zlabel"], :text, String))
     if variables.xlog
         plot!(xscale=:log10)
     end
@@ -76,12 +76,12 @@ function plot_option!()
 end
 
 function genfn_single()
-     if contains(variables.eqn, "=")
+    if occursin("=", variables.eqn)
         eqn = split(variables.eqn, "=")[2]
     else
         eqn = variables.eqn
     end
-    f = eval(parse(variables.x * "->" * eqn))
+    f = eval(Meta.parse(variables.x * "->" * eqn))
 
     return f
 end
@@ -89,12 +89,12 @@ end
 function genfn_double()
     x = variables.xs:variables.xf
     y = variables.ys:variables.yf
-    if contains(variables.eqn, "=")
+    if occursin("=", variables.eqn)
         eqn = split(variables.eqn, "=")[2]
     else
         eqn = variables.eqn
     end
-    f = eval(parse( "(" * variables.x * "," * variables.y * ")" * "->" * eqn))
+    f = eval(Meta.parse( "(" * variables.x * "," * variables.y * ")" * "->" * eqn))
 
     return x, y, f
 end
@@ -102,45 +102,45 @@ end
 function genfn_para()
     if length(split(variables.eqn, ",")) == 2
         de = split(variables.eqn, ",")
-        if contains(de[1], "=")
+        if occursin("=", de[1])
             e1 = split(de[1], "=")[2]
         else
             e1 = de[1]
         end
 
-        if contains(de[2], "=")
+        if occursin("=", de[2])
             e2 = split(de[2], "=")[2]
         else
             e2 = de[2]
         end
 
-        f = eval(parse(variables.t * "->" * e1))
-        g = eval(parse(variables.t * "->" * e2))
+        f = eval(Meta.parse(variables.t * "->" * e1))
+        g = eval(Meta.parse(variables.t * "->" * e2))
 
         return f, g
     else
         de = split(variables.eqn, ",")
-        if contains(de[1], "=")
+        if occursin("=", de[1])
             e1 = split(de[1], "=")[2]
         else
             e1 = de[1]
         end
 
-        if contains(de[2], "=")
+        if occursin("=", de[2])
             e2 = split(de[2], "=")[2]
         else
             e2 = de[2]
         end
 
-        if contains(de[3], "=")
+        if occursin("=", de[3])
             e3 = split(de[3], "=")[2]
         else
             e3 = de[3]
         end
 
-        f = eval(parse(variables.t * "->" * e1))
-        g = eval(parse(variables.t * "->" * e2))
-        h = eval(parse(variables.t * "->" * e3))
+        f = eval(Meta.parse(variables.t * "->" * e1))
+        g = eval(Meta.parse(variables.t * "->" * e2))
+        h = eval(Meta.parse(variables.t * "->" * e3))
 
         return f, g, h
     end
@@ -155,7 +155,7 @@ function plot2d_button()
     plot_option!()
     savefig(filename)
 
-    setproperty!(ui["preview"], :file, filename)
+    set_gtk_property!(ui["preview"], :file, filename)
     println("plot 2d function")
 
     return nothing
@@ -169,7 +169,7 @@ function contour_button()
     plot_option!()
     savefig(filename)
 
-    setproperty!(ui["preview"], :file, filename)
+    set_gtk_property!(ui["preview"], :file, filename)
     println("contour")
 
     return nothing
@@ -181,7 +181,7 @@ function para2d_button()
     plot(t1 -> Base.invokelatest(f,t1), t2 -> Base.invokelatest(g,t2), variables.ts, variables.tf)
     plot_option!()
     savefig(filename)
-    setproperty!(ui["preview"], :file, filename)
+    set_gtk_property!(ui["preview"], :file, filename)
     println("parametric function 2d")
 
     return nothing
@@ -194,7 +194,7 @@ function plot3d_button()
     plot_option!()
     savefig(filename)
 
-    setproperty!(ui["preview"], :file, filename)
+    set_gtk_property!(ui["preview"], :file, filename)
     println("plot 3d function")
 
     return nothing
@@ -209,7 +209,7 @@ function para3d_button()
          variables.ts, variables.tf)
     plot_option!()
     savefig(filename)
-    setproperty!(ui["preview"], :file, filename)
+    set_gtk_property!(ui["preview"], :file, filename)
     println("parametric function 3d")
 
     return nothing

@@ -19,7 +19,7 @@ push!(buttonbox, label)
 push!(buttonbox, reset_button)
 push!(buttonbox, next_button)
 
-setproperty!(hbox, :expand, board, true)
+set_gtk_property!(hbox, :expand, board, true)
 
 
 row, col = 20, 40
@@ -29,18 +29,18 @@ GAccessor.markup(board, "<span font_desc=\"mono 10\">" * sprint(d) * "</span>")
 ngen = 0
 function nextstate(x)
     global ngen += 1
-    setproperty!(label, :label, "$ngen generation")
+    set_gtk_property!(label, :label, "$ngen generation")
     d.state = next_generation(d)
     GAccessor.markup(board, "<span font_desc=\"mono 10\">" * sprint(d) * "</span>")
 end
 
 function resetbutton(x, l)
     global ngen = 0
-    setproperty!(label, :label, "0 generation")
-    setproperty!(l, :label, "")
+    set_gtk_property!(label, :label, "0 generation")
+    set_gtk_property!(l, :label, "")
     global d = Gol(row, col)
     GAccessor.markup(board, "<span font_desc=\"mono 10\">" * sprint(d) * "</span>")
-    # setproperty!(l, :label, sprint(d))
+    # set_gtk_property!(l, :label, sprint(d))
     return nothing
 end
 

@@ -37,11 +37,11 @@ iter = 0
 function onoff(x, h)
     global iter += 1
     if isodd(iter)
-        setproperty!(h, :label, "O")
-        setproperty!(h, :name, "O")
+        set_gtk_property!(h, :label, "O")
+        set_gtk_property!(h, :name, "O")
     else
-        setproperty!(h, :label, "X")
-        setproperty!(h, :name, "X")
+        set_gtk_property!(h, :label, "X")
+        set_gtk_property!(h, :name, "X")
     end
     checkboard()
 
@@ -49,24 +49,24 @@ function onoff(x, h)
 end
 
 function checkboard()
-    if (all([ getproperty(g[1,i], :name, String) == getproperty(g[1,1], :name, String) != "" for i in 1:n]) ||
-        all([ getproperty(g[i,1], :name, String) == getproperty(g[1,1], :name, String) != "" for i in 1:n]) ||
-        all([ getproperty(g[2,i], :name, String) == getproperty(g[2,2], :name, String) != "" for i in 1:n]) ||
-        all([ getproperty(g[i,2], :name, String) == getproperty(g[2,2], :name, String) != "" for i in 1:n]) ||
-        all([ getproperty(g[3,i], :name, String) == getproperty(g[3,3], :name, String) != "" for i in 1:n]) ||
-        all([ getproperty(g[i,3], :name, String) == getproperty(g[3,3], :name, String) != "" for i in 1:n]) ||
-        all([ getproperty(g[i,i], :name, String) == getproperty(g[2,2], :name, String) != "" for i in 1:n]) ||
-        all([ getproperty(g[3-i,i+1], :name, String) == getproperty(g[2,2], :name, String) != "" for i in 0:n-1]) )
+    if (all([ get_gtk_property(g[1,i], :name, String) == get_gtk_property(g[1,1], :name, String) != "" for i in 1:n]) ||
+        all([ get_gtk_property(g[i,1], :name, String) == get_gtk_property(g[1,1], :name, String) != "" for i in 1:n]) ||
+        all([ get_gtk_property(g[2,i], :name, String) == get_gtk_property(g[2,2], :name, String) != "" for i in 1:n]) ||
+        all([ get_gtk_property(g[i,2], :name, String) == get_gtk_property(g[2,2], :name, String) != "" for i in 1:n]) ||
+        all([ get_gtk_property(g[3,i], :name, String) == get_gtk_property(g[3,3], :name, String) != "" for i in 1:n]) ||
+        all([ get_gtk_property(g[i,3], :name, String) == get_gtk_property(g[3,3], :name, String) != "" for i in 1:n]) ||
+        all([ get_gtk_property(g[i,i], :name, String) == get_gtk_property(g[2,2], :name, String) != "" for i in 1:n]) ||
+        all([ get_gtk_property(g[3-i,i+1], :name, String) == get_gtk_property(g[2,2], :name, String) != "" for i in 0:n-1]) )
 
         if isodd(iter)
-            setproperty!(label, :label, "Win O")
+            set_gtk_property!(label, :label, "Win O")
         else
-            setproperty!(label, :label, "Win X")
+            set_gtk_property!(label, :label, "Win X")
         end
 
-    elseif (all([getproperty(g[i,j], :name, String) != "" for i in 1:n for j in 1:n]) &&
-                                getproperty(label, :label, String) == "")
-        setproperty!(label, :label, "Draw")
+    elseif (all([get_gtk_property(g[i,j], :name, String) != "" for i in 1:n for j in 1:n]) &&
+                                get_gtk_property(label, :label, String) == "")
+        set_gtk_property!(label, :label, "Draw")
 
     end
 end
@@ -74,10 +74,10 @@ end
 function reset_state(x)
     global iter = 0
     for i in 1:n, j in 1:n
-        setproperty!(g[i,j], :label, "")
-        setproperty!(g[i,j], :name, "")
+        set_gtk_property!(g[i,j], :label, "")
+        set_gtk_property!(g[i,j], :name, "")
     end
-    setproperty!(label, :label, "")
+    set_gtk_property!(label, :label, "")
 end
 
 signal_connect(reset_state, reset_button, "clicked")

@@ -6,7 +6,7 @@ showall(ui["win"])
 
 
 function preview()
-    getproperty(ui["text"], :buffer, GtkTextBuffer) |> x -> getproperty(x, :text, String) |> x -> setproperty!(ui["label"], :label, x)
+    get_gtk_property(ui["text"], :buffer, GtkTextBuffer) |> x -> get_gtk_property(x, :text, String) |> x -> set_gtk_property!(ui["label"], :label, x)
 
     return nothing
 end
@@ -18,7 +18,7 @@ function open_about()
 end
 
 signal_connect(x-> preview(), ui["preview_button"], "clicked")
-signal_connect((x,y) -> open_about(), ui["menu_about"], :activate, Void, (), false)
+signal_connect((x,y) -> open_about(), ui["menu_about"], :activate, Nothing, (), false)
 
 
 signal_connect(ui["file_quit"], :activate) do w

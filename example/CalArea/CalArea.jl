@@ -7,8 +7,8 @@ vbox = Box(:v)
 label = Label("")
 fh = Frame("Height")
 fw = Frame("Width")
-hent = Entry(); setproperty!(hent, :text, 3)
-went = Entry(); setproperty!(went, :text, 4)
+hent = Entry(); set_gtk_property!(hent, :text, 3)
+went = Entry(); set_gtk_property!(went, :text, 4)
 
 push!(win, hbox)
 push!(hbox, label)
@@ -16,13 +16,13 @@ push!(hbox, vbox)
 push!(vbox, fh); push!(fh, hent)
 push!(vbox, fw); push!(fw, went)
 
-setproperty!(hbox, :expand, label, true)
-setproperty!(label, :use_markup, true)
-setproperty!(label, :label, "<span font=\"60\">" * string(*(getproperty(hent, :text, String) |> parse |> eval, getproperty(went, :text, String) |> parse |> eval)) * "</span>")
+set_gtk_property!(hbox, :expand, label, true)
+set_gtk_property!(label, :use_markup, true)
+set_gtk_property!(label, :label, "<span font=\"60\">" * string(*(get_gtk_property(hent, :text, String) |> Meta.parse |> eval, get_gtk_property(went, :text, String) |> Meta.parse |> eval)) * "</span>")
 showall(win)
 
 function calarea()
-    setproperty!(label, :label, "<span font=\"60\">" * string(*(getproperty(hent, :text, String) |> parse |> eval, getproperty(went, :text, String) |> parse |> eval)) * "</span>")
+    set_gtk_property!(label, :label, "<span font=\"60\">" * string(*(get_gtk_property(hent, :text, String) |> Meta.parse |> eval, get_gtk_property(went, :text, String) |> Meta.parse |> eval)) * "</span>")
 
     return nothing
 end

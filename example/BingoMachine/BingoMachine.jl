@@ -1,5 +1,6 @@
 #!/usr/bin/env julia
 using Gtk, Gtk.ShortNames
+using Random
 
 # 画面レイアウト
 win = Window("Bingo Machine")
@@ -19,7 +20,7 @@ push!(filemenu, menu_quit)
 
 ## 数字表示部分
 number_display = Label("")
-setproperty!(number_display, :use_markup, true)
+set_gtk_property!(number_display, :use_markup, true)
 hbox = Box(:h)
 push!(vbox, number_display)
 push!(vbox, hbox)
@@ -30,9 +31,9 @@ reset_button = Button("Reset")
 push!(hbox, next_button)
 push!(hbox, reset_button)
 
-setproperty!(vbox, :expand, number_display, true)
-setproperty!(hbox, :expand, next_button, true)
-setproperty!(hbox, :expand, reset_button, true)
+set_gtk_property!(vbox, :expand, number_display, true)
+set_gtk_property!(hbox, :expand, next_button, true)
+set_gtk_property!(hbox, :expand, reset_button, true)
 
 
 maxnum = 75
@@ -55,7 +56,7 @@ end
 function reset_number()
     global number_list = shuffle(1:maxnum)
     global number_history = []
-    setproperty!(number_display, :label, "")
+    set_gtk_property!(number_display, :label, "")
 
     return nothing
 end
@@ -64,7 +65,7 @@ end
 function show_history()
     win = Window("Number history")
     history = Label("<span font=\"15\">" * join(number_history, " ") * "</span>")
-    setproperty!(history, :use_markup, true)
+    set_gtk_property!(history, :use_markup, true)
     push!(win, history)
     GAccessor.line_wrap(history, true)
     showall(win)
@@ -77,7 +78,7 @@ showall(win)
 
 signal_connect(x -> next_number(), next_button, "clicked")
 signal_connect(x -> reset_number(), reset_button, "clicked")
-signal_connect((x,y) -> show_history(), menu_history, :activate, Void, (), false)
+signal_connect((x,y) -> show_history(), menu_history, :activate, Nothing, (), false)
 
 signal_connect(menu_quit, :activate) do w
   if !isinteractive()

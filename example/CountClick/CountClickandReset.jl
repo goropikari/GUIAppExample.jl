@@ -11,18 +11,18 @@ b = GtkButton("Click")
 push!(v, l)
 push!(v, r)
 push!(v, b)
-setproperty!(v, :expand, l, true)
+set_gtk_property!(v, :expand, l, true)
 
 niter = 0
 function click(widget)
     global niter += 1
-    setproperty!(l, :label, "You clicked $niter times.")
+    set_gtk_property!(l, :label, "You clicked $niter times.")
     return nothing
 end
 
 function resetcount(widget)
     global niter = 0
-    setproperty!(l, :label, "You clicked 0 times.")
+    set_gtk_property!(l, :label, "You clicked 0 times.")
     return nothing
 end
 

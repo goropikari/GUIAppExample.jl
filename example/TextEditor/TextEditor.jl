@@ -14,8 +14,8 @@ text = Text()
 ui = Builder(filename=(@__DIR__) * "/ui.glade")
 showall(ui["win"])
 
-writetext!(textview::GtkTextView, s::AbstractString) = getproperty(textview, :buffer, GtkTextBuffer) |> x -> setproperty!(x, :text, s)
-gettext(textview::GtkTextView) = getproperty(textview, :buffer, GtkTextBuffer) |> x -> getproperty(x, :text, AbstractString)
+writetext!(textview::GtkTextView, s::AbstractString) = get_gtk_property(textview, :buffer, GtkTextBuffer) |> x -> set_gtk_property!(x, :text, s)
+gettext(textview::GtkTextView) = get_gtk_property(textview, :buffer, GtkTextBuffer) |> x -> get_gtk_property(x, :text, AbstractString)
 
 function file_new()
     textcontent = gettext(ui["textview"])
@@ -23,7 +23,7 @@ function file_new()
         info_dialog("中身消しちゃったけど許してね!")
     end
     writetext!(ui["textview"], "")
-    setproperty!(ui["win"], :title, "")
+    set_gtk_property!(ui["win"], :title, "")
     text.name, text.fileplace = "", ""
 
     return nothing
@@ -35,7 +35,7 @@ function file_open()
         textcontent = open(readstring, text.fileplace)
         writetext!(ui["textview"], textcontent)
         text.name = split(text.fileplace, "/")[end]
-        setproperty!(ui["win"], :title, text.name)
+        set_gtk_property!(ui["win"], :title, text.name)
     end
 
     return nothing
@@ -59,18 +59,18 @@ function file_save_as()
         textcontent = gettext(ui["textview"])
         write(text.fileplace, textcontent)
         text.name = split(text.fileplace, "/")[end]
-        setproperty!(ui["win"], :title, text.name)
+        set_gtk_property!(ui["win"], :title, text.name)
     end
 
     return nothing
 end
 
 
-signal_connect((x,y)->file_new(), ui["file_new"], :activate, Void, (), false)
-signal_connect((x,y)->file_open(), ui["file_open"], :activate, Void, (), false)
-signal_connect((x,y)->file_save(), ui["file_save"], :activate, Void, (), false)
-signal_connect((x,y)->file_save_as(), ui["file_save_as"], :activate, Void, (), false)
-signal_connect((x,y)->exit(), ui["file_quit"], :activate, Void, (), false)
+signal_connect((x,y)->file_new(), ui["file_new"], :activate, Nothing, (), false)
+signal_connect((x,y)->file_open(), ui["file_open"], :activate, Nothing, (), false)
+signal_connect((x,y)->file_save(), ui["file_save"], :activate, Nothing, (), false)
+signal_connect((x,y)->file_save_as(), ui["file_save_as"], :activate, Nothing, (), false)
+signal_connect((x,y)->exit(), ui["file_quit"], :activate, Nothing, (), false)
 
 if !isinteractive()
     c = Condition()

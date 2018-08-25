@@ -4,19 +4,19 @@ using Gtk, Gtk.ShortNames
 ui = Builder(filename=(@__DIR__) * "/ui.glade")
 showall(ui["win"])
 
-gettext(textview::GtkTextView) = getproperty(textview, :buffer, GtkTextBuffer) |> x -> getproperty(x, :text, AbstractString)
+gettext(textview::GtkTextView) = get_gtk_property(textview, :buffer, GtkTextBuffer) |> x -> get_gtk_property(x, :text, AbstractString)
 
 function eqn2val()
-	s = replace(gettext(ui["eqn"]), "\n", ";")
-	val = eval(parse(s))
+	s = replace(gettext(ui["eqn"]), "\n" => ";")
+	val = eval(Meta.parse(s))
 
-	setproperty!(ui["resultent"], :text, val)
+	set_gtk_property!(ui["resultent"], :text, val)
 
 	return nothing
 end
 
 function reset_button()
-	setproperty!(ui["resultent"], :text, "")
+	set_gtk_property!(ui["resultent"], :text, "")
 
 	return nothing
 end

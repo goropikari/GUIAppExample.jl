@@ -8,7 +8,7 @@ b = Button("Click!")
 push!(win, v)
 push!(v, l)
 push!(v, b)
-setproperty!(v, :expand, l, true)
+set_gtk_property!(v, :expand, l, true)
 
 showall(win)
 
@@ -16,7 +16,7 @@ showall(win)
 niter = 0
 function click()
     global niter += 1
-    setproperty!(l, :label, "You clicked $niter times.")
+    set_gtk_property!(l, :label, "You clicked $niter times.")
     return nothing
 end
 

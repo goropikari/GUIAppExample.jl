@@ -1,7 +1,7 @@
 import Base.sprint
 export Gol, game, glidergun
 
-type Gol
+mutable struct Gol
     state::Matrix{Int8}
     isperiodic::Bool
     generations::Int
@@ -58,7 +58,7 @@ end
 
 function sprint(d::Gol)
     n, m = size(d.state)
-    sm = Matrix{String}(n,m)
+    sm = Matrix{String}(undef,n,m)
     s = ""
     for i in 1:n
         for j in 1:m
