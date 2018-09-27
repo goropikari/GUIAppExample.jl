@@ -6,3 +6,12 @@
 
 ./CountClickandReset.jl
 ```
+
+# Building an executable
+```julia
+julia> using PackageCompiler
+
+julia> build_executable("compile_click.jl", "click")
+
+julia> run(`builddir/click`)
+```
