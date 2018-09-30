@@ -4,11 +4,12 @@ These are GUI apps in Julia. They are made of GTK.
 
 ## REQUIRE
 - [Gtk.jl](https://github.com/JuliaGraphics/Gtk.jl)
-- PackageCompiler.jl if you build an executable
+- [PackageCompiler.jl](https://github.com/JuliaLang/PackageCompiler.jl) if you build an executable
 
 ```julia
 using Pkg
 Pkg.add("Gtk")
+Pkg.add("PackageCompiler")
 ```
 
 ## Reference
@@ -21,27 +22,27 @@ Pkg.add("Gtk")
 
 <img src="screenshots/clickreset.png" align="middle" />
 
-### Calculate Area
+### [Calculate Area](./example/CalArea)
 <img src="screenshots/calarea.png" align="middle" />
 
-### Bingo machine
+### [Bingo machine](./example/BingoMachine)
 <img src="screenshots/bingomachine.png" align="middle" />
 
-### Conway's Game of Life
+### [Conway's Game of Life](./example/GameOfLife)
 <img src="screenshots/gol.png" align="middle" />
 
-### Tic Tac Toe
+### [Tic Tac Toe](./example/Tictactoe)
 <img src="screenshots/tictactoe.png" align="middle" />
 
-### Text editor
+### [Text editor](./example/TextEditor)
 
 <img src="screenshots/texteditor.png" align="middle" />
 
-### Calculator
+### [Calculator](./example/Calculator)
 <img src="screenshots/calculator.png" align="middle" />
 
-### Plot function
+### [Plot function](./example/Plotfunction)
 <img src="screenshots/plotfunction.png" align="middle" />
 
-### Reversi
+### [Reversi](./example/Reversi)
 <img src="screenshots/reversi.gif" align="middle" />
