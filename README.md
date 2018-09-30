@@ -4,14 +4,16 @@ These are GUI apps in Julia. They are made of GTK.
 
 ## REQUIRE
 - [Gtk.jl](https://github.com/JuliaGraphics/Gtk.jl)
+- PackageCompiler.jl if you build an executable
 
 ```julia
+using Pkg
 Pkg.add("Gtk")
 ```
 
 ## Reference
-[Gtk.jl documentation](http://juliagraphics.github.io/Gtk.jl/latest/)
-[GTK+ 3 Reference Manual](https://developer.gnome.org/gtk3/stable/)
+- [Gtk.jl documentation](http://juliagraphics.github.io/Gtk.jl/latest/)
+- [GTK+ 3 Reference Manual](https://developer.gnome.org/gtk3/stable/)
 
 ## Screenshots
 ### [Count Click](./example/CountClick)
@@ -40,3 +42,6 @@ Pkg.add("Gtk")
 
 ### Plot function
 <img src="screenshots/plotfunction.png" align="middle" />
+
+### Reversi
+<img src="screenshots/reversi.gif" align="middle" />
