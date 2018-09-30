@@ -1,3 +1,10 @@
+# Environment
+- Julia 1.0
+- Gtk.jl v0.16.4
+- Plots v0.20.3
+- GR v0.34.1
+- PackageCompiler v0.5.0
+
 <img src="../../screenshots/plotfunction.png" align="middle" />
 
 ```julia
@@ -12,7 +19,7 @@ sin(x)
 
 ## contour
 ```
-sin(sqrt(x^2 + y^2) ) / sqrt(x^2 + y^2) 
+sin(sqrt(x^2 + y^2) ) / sqrt(x^2 + y^2)
 ```
 
 ## 2d parametric function
@@ -29,4 +36,3 @@ sin(sqrt(x^2 + y^2) ) / sqrt(x^2 + y^2)
 ```
 cos(t), sin(t), t
 ```
-

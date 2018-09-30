@@ -1,14 +1,14 @@
 #!/usr/bin/env julia
 using Gtk, Gtk.ShortNames
 
-mutable struct Text
+mutable struct TextModule
     name::AbstractString
     fileplace::AbstractString
 
-    Text() = new("", "")
+    TextModule() = new("", "")
 end
 
-text = Text()
+text = TextModule()
 
 
 ui = Builder(filename=(@__DIR__) * "/ui.glade")

@@ -1,3 +1,9 @@
+# Environment
+- Julia 1.0
+- Gtk.jl v0.16.4
+- PackageCompiler v0.5.0
+
+
 <img src="../../screenshots/click.png" align="middle" />
 <img src="../../screenshots/clickreset.png" align="middle" />
 

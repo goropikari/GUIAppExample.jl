@@ -14,7 +14,7 @@ Pkg.add("Gtk")
 [GTK+ 3 Reference Manual](https://developer.gnome.org/gtk3/stable/)
 
 ## Screenshots
-### Count Click
+### [Count Click](./example/CountClick)
 <img src="screenshots/click.png" align="middle" />
 
 <img src="screenshots/clickreset.png" align="middle" />
@@ -40,4 +40,3 @@ Pkg.add("Gtk")
 
 ### Plot function
 <img src="screenshots/plotfunction.png" align="middle" />
-
