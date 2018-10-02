@@ -12,3 +12,6 @@
 $ julia -e 'using PackageCompiler; build_executable("reversi.jl", "reversi")'
 $ builddir/click
 ```
+
+**WARNING: There are many bugs in this reversi game. I only wanted to know how to handle combination PackageCompiler.jl with Gtk.jl.
+ I don't plan to fix those bugs.**
