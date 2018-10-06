@@ -3,7 +3,7 @@
 - Gtk.jl v0.16.4
 
 
-<img src="../../screenshots/gameoflifegui.gif" align="middle" />
+<img src="../../screenshots/gameoflife_interact.gif" align="middle" />
 
 ```bash
 $ ./gol_interact.jl

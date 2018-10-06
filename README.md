@@ -31,7 +31,7 @@ Pkg.add("PackageCompiler")
 ### [Conway's Game of Life](./example/GameOfLife)
 <img src="screenshots/gol.png" align="middle" />
 
-### [Conway's Game of Life (interactive)](./example/GameOfLifeGUI)
+### [Conway's Game of Life (interactive)](./example/GameOfLife_Interact)
 <img src="screenshots/gameoflife_interact.gif" align="middle" />
 
 ### [Tic Tac Toe](./example/Tictactoe)
