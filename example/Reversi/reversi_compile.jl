@@ -1,7 +1,8 @@
+module Hello
 using Gtk, Graphics
 
 global flag=0
-const dir = ( (-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1) )
+global dir = ( (-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1) )
 
 mutable struct Board
     table::Matrix{Int}
@@ -79,51 +80,57 @@ function draw_board!(c::GtkCanvas, b::Board)
     show(c)
 end
 
-b = Board()
-c = @GtkCanvas()
-n = 400
-bnum = sum(b.table .== 0)
-wnum = sum(b.table .== 1)
-win = GtkWindow(c,
-        "Reversi: White $(lpad(wnum, 2)), Black: $(lpad(bnum, 2)), Turn: " * (b.turn == 1 ? "White" : "Black"),
-        n, n)
-initialize!(c)
-draw_board!(c, b)
-
-c.mouse.button1press = @guarded (widget, event) -> begin
-    n = 8
-    turn = b.turn
-    ctx = getgc(widget)
-    set_source_rgb(ctx, turn, turn, turn)
-    h = height(c)
-    space = h/n
-    r = space/2
-    x, y = Int(div(event.x, space)), Int(div(event.y, space))
-    x += 1; y += 1
-    b.table[x, y] = b.turn
-    for (h,v) in dir
-        if 0 < x+h <= n && 0 < y+v <= n
-            b.table[x+h, y+v] == -1 && continue
-            flip!(b, x+h, y+v, h, v)
-            global flag=0
-        end
-    end
-    initialize!(c)
-    draw_board!(c, b)
-    draw_board!(c, b)
-    reveal(widget)
-    b.turn = xor(1, b.turn)
+Base.@ccallable function julia_main(ARGS::Vector{String})::Cint
+    b = Board()
+    c = @GtkCanvas()
+    n = 400
     bnum = sum(b.table .== 0)
     wnum = sum(b.table .== 1)
-    set_gtk_property!(win, :title, "Reversi: White $(lpad(wnum, 2)), Black: $(lpad(bnum, 2)), Turn: " * (b.turn == 1 ? "White" : "Black"))
-end
-initialize!(c)
-draw_board!(c,b)
+    win = GtkWindow(c,
+            "Reversi: White $(lpad(wnum, 2)), Black: $(lpad(bnum, 2)), Turn: " * (b.turn == 1 ? "White" : "Black"),
+            n, n)
+    initialize!(c)
+    draw_board!(c, b)
 
-if !isinteractive()
-    cond = Condition()
-    signal_connect(win, :destroy) do widget
-        notify(cond)
+    c.mouse.button1press = @guarded (widget, event) -> begin
+        n = 8
+        turn = b.turn
+        ctx = getgc(widget)
+        set_source_rgb(ctx, turn, turn, turn)
+        h = height(c)
+        space = h/n
+        r = space/2
+        x, y = Int(div(event.x, space)), Int(div(event.y, space))
+        # println(x, y)
+        x += 1; y += 1
+        b.table[x, y] = b.turn
+        for (h,v) in dir
+            if 0 < x+h <= n && 0 < y+v <= n
+                b.table[x+h, y+v] == -1 && continue
+                flip!(b, x+h, y+v, h, v)
+                global flag=0
+            end
+        end
+        initialize!(c)
+        draw_board!(c, b)
+        draw_board!(c, b)
+        reveal(widget)
+        b.turn = xor(1, b.turn)
+        bnum = sum(b.table .== 0)
+        wnum = sum(b.table .== 1)
+        set_gtk_property!(win, :title, "Reversi: White $(lpad(wnum, 2)), Black: $(lpad(bnum, 2)), Turn: " * (b.turn == 1 ? "White" : "Black"))
     end
-    wait(cond)
+    initialize!(c)
+    draw_board!(c,b)
+
+    if !isinteractive()
+        cond = Condition()
+        signal_connect(win, :destroy) do widget
+            notify(cond)
+        end
+        wait(cond)
+    end
+    return 0
+end
+
 end

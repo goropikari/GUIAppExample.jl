@@ -31,6 +31,9 @@ Pkg.add("PackageCompiler")
 ### [Conway's Game of Life](./example/GameOfLife)
 <img src="screenshots/gol.png" align="middle" />
 
+### [Conway's Game of Life (interactive)](./example/GameOfLifeGUI)
+<img src="screenshots/gameoflife_interact.gif" align="middle" />
+
 ### [Tic Tac Toe](./example/Tictactoe)
 <img src="screenshots/tictactoe.png" align="middle" />
 
@@ -46,3 +49,4 @@ Pkg.add("PackageCompiler")
 
 ### [Reversi](./example/Reversi)
 <img src="screenshots/reversi.gif" align="middle" />
+
