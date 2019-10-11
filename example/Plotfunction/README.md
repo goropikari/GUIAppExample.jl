@@ -1,9 +1,5 @@
 # Environment
-- Julia 1.0
-- Gtk.jl v0.16.4
-- Plots v0.20.3
-- GR v0.34.1
-- PackageCompiler v0.5.0
+- Julia 1.2
 
 <img src="../../screenshots/plotfunction.png" align="middle" />
 
@@ -35,4 +31,12 @@ sin(sqrt(x^2 + y^2) ) / sqrt(x^2 + y^2)
 ## 3d parametric function
 ```
 cos(t), sin(t), t
+```
+
+# PackageCompiler
+
+```bash
+julia -e 'using Pkg; Pkg.add.(["PackageCompiler", "Plots", "Gtk", "Random", "ArgParse"]); \
+          using PackageCompiler; \
+          build_executable("plot.jl", "plotfns")'
 ```

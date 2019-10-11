@@ -1,6 +1,5 @@
 # Environment
-- Julia 1.0
-- Gtk.jl v0.16.4
+- Julia 1.2
 
 <img src="../../screenshots/calculator.png" align="middle" />
 
