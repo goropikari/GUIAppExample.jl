@@ -1,6 +1,4 @@
 # script for PackageCompiler.jl
-# Julia 1.0
-# julia juliarc.jl -ae plot.jl
 
 module Hello
 
