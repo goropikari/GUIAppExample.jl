@@ -3,6 +3,7 @@
 These are GUI apps in Julia. They are made of GTK.
 
 ## REQUIRE
+- Julia 1.4
 - [Gtk.jl](https://github.com/JuliaGraphics/Gtk.jl)
 - [PackageCompiler.jl](https://github.com/JuliaLang/PackageCompiler.jl) if you build an executable
 
@@ -10,6 +11,17 @@ These are GUI apps in Julia. They are made of GTK.
 using Pkg
 Pkg.add("Gtk")
 Pkg.add("PackageCompiler")
+```
+
+### Docker
+
+e.g.
+```
+$ docker-compose build
+$ docker-compose run juliagtk /bin/bash
+$ cd example/CountClick
+$ julia --project -e 'using Pkg; Pkg.instantiate()'
+$ julia CountClick.jl
 ```
 
 ## Reference

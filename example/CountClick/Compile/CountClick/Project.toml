@@ -1,0 +1,8 @@
+name = "CountClick"
+uuid = "3a28ec44-774f-11ea-103a-d1c1be521660"
+authors = ["goropikari"]
+version = "0.1.0"
+
+[deps]
+Gtk = "4c0ca9eb-093a-5379-98c5-f87ac0bbbf44"
+PackageCompiler = "9b87118b-4619-50d2-8e1e-99f35a4d4d9d"
