@@ -1,8 +1,8 @@
-module Hello
+module CountClick
 
 using Gtk
 
-Base.@ccallable function julia_main(ARGS::Vector{String})::Cint
+function julia_main()::Cint
     win = GtkWindow("Count Click")
     v = GtkBox(:v)
     l = GtkLabel("You clicked 0 times.")

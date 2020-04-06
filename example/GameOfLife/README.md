@@ -1,8 +1,8 @@
 # Environment
-- Julia 1.2
+- Julia 1.4
 
 <img src="../../screenshots/gol.png" align="middle" />
 
 ```julia
-./App.jl
+julia --project App.jl
 ```

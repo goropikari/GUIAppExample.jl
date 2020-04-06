@@ -1,8 +1,8 @@
 # Environment
-- Julia 1.2
+- Julia 1.4
 
 <img src="../../screenshots/calculator.png" align="middle" />
 
 ```julia
-./cal.jl
+julia --project cal.jl
 ```

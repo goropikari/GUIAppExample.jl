@@ -1,1 +1,9 @@
 *~
+.julia
+.Xauthority
+.bash_history
+.cache/
+.sudo_as_admin_successful
+.viminfo
+.wget-hsts
+*Compiled

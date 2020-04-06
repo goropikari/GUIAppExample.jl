@@ -1,21 +1,20 @@
 # Environment
-- OS: ArchLinux
-- Julia 1.2
-
+- Julia 1.4
+- Gtk.jl 1.1.3
+- PackageCompiler.jl 1.1.0
 
 <img src="../../screenshots/click.png" align="middle" />
 <img src="../../screenshots/clickreset.png" align="middle" />
 
 ```bash
-./CountClick.jl
+julia --project CountClick.jl
 
-./CountClickandReset.jl
+julia --project CountClickandReset.jl
 ```
 
 # Building an executable
 ```bash
-julia -e 'using Pkg; Pkg.add.(["Gtk", "PackageCompiler"]); \
-          using PackageCompiler; \
-          build_executable("compile_click.jl", "click")'
-./click
+$ cd Compile
+$ julia -q --project -e 'using PackageCompiler; create_app("CountClick", "CountClickCompiled")'
+$ CountClickCompiled/bin/CountClick
 ```
