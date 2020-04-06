@@ -7,9 +7,9 @@
 <img src="../../screenshots/clickreset.png" align="middle" />
 
 ```bash
-julia CountClick.jl
+julia --project CountClick.jl
 
-julia CountClickandReset.jl
+julia --project CountClickandReset.jl
 ```
 
 # Building an executable
