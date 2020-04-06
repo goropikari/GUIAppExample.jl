@@ -32,7 +32,7 @@ end
 function file_open()
     text.fileplace = open_dialog("Open file", ui["win"], ("*.txt", "*",))
     if !isempty(text.fileplace)
-        textcontent = open(readstring, text.fileplace)
+        textcontent = open(io->read(io, String), text.fileplace)
         writetext!(ui["textview"], textcontent)
         text.name = split(text.fileplace, "/")[end]
         set_gtk_property!(ui["win"], :title, text.name)
