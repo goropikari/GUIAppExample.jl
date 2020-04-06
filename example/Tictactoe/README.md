@@ -1,8 +1,8 @@
 # Environment
-- Julia 1.2
+- Julia 1.4
 
 <img src="../../screenshots/tictactoe.png" align="middle" />
 
 ```julia
-./Tictactoe.jl
+julia --project Tictactoe.jl
 ```
