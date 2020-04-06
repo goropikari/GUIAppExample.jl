@@ -1,10 +1,10 @@
 # Environment
-- Julia 1.2
+- Julia 1.4
 
 <img src="../../screenshots/plotfunction.png" align="middle" />
 
 ```julia
-./plotfunction.jl # or julia plotfunction.jl
+julia --project plotfunction.jl
 ```
 
 # Sample
@@ -31,12 +31,4 @@ sin(sqrt(x^2 + y^2) ) / sqrt(x^2 + y^2)
 ## 3d parametric function
 ```
 cos(t), sin(t), t
-```
-
-# PackageCompiler
-
-```bash
-julia -e 'using Pkg; Pkg.add.(["PackageCompiler", "Plots", "Gtk", "Random", "ArgParse"]); \
-          using PackageCompiler; \
-          build_executable("plot.jl", "plotfns")'
 ```
